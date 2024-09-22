@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Plataforma.h"
 #include "CieloNoche.h"
+#include "CuboDisparador.h"
 #include "GameFramework/GameModeBase.h"
 #include "DonkeyKongGameMode.generated.h"
 UCLASS(minimalapi)
@@ -23,6 +24,7 @@ private:
 	APlataforma* movPlataforma2;
 
 	void GenerarPlataformas();
+	void GenerarCuboDisparador();
 
     float e;
 
@@ -32,6 +34,7 @@ private:
 
 	TMap<int32, APlataforma*> PlataformaMap;
 	TMap<int32, APlataforma*> PlataformaMapcero;
+	TArray<ACuboDisparador*> CubosDisparadores;
 
 	float numRandoms;
 

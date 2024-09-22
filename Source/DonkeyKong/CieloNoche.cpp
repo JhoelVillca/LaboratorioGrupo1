@@ -10,7 +10,6 @@ ACieloNoche::ACieloNoche()
 
     CieloNocheMallaComponente = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CieloNocheMallaComponente"));
 
-    // Cargar el Blueprint
     ConstructorHelpers::FObjectFinder<UBlueprint> cieloNocturno(TEXT("Blueprint'/Game/GoodSky/Blueprint/BP_GoodSky.BP_GoodSky'"));
     if (cieloNocturno.Succeeded())
     {

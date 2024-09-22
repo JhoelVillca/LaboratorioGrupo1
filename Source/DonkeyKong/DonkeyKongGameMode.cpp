@@ -82,11 +82,28 @@ void ADonkeyKongGameMode::GenerarPlataformas()
 
 }
 
+void ADonkeyKongGameMode::GenerarCuboDisparador()
+{
+	for (int x = 0; x < 3; x++)
+	{
+		numRandoms = FMath::RoundToInt(FMath::FRandRange(1.0f, 5 * e));
+		APlataforma* PlataformaEncontrada = PlataformaMap[numRandoms];
+		FVector UbicacionCubo = PlataformaEncontrada->GetActorLocation() + FVector(0, 0, 100);
+		ACuboDisparador* NuevoCubo = GetWorld()->SpawnActor<ACuboDisparador>(UbicacionCubo, FRotator(0, 0, 0));
+		if (NuevoCubo) {
+			CubosDisparadores.Add(NuevoCubo);
+		}
+	}
+
+}
+
 void ADonkeyKongGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	GenerarPlataformas();
 	GetWorld()->SpawnActor<ACieloNoche>(FVector(1207.0f, -516 , 780.0f), FRotator(90, 0, 0));
+	GenerarCuboDisparador();
+
 }
 
 

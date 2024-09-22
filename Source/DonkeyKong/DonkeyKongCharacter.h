@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Proyectil.h"
 #include "DonkeyKongCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -42,4 +43,10 @@ public:
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+
+	void DispararC();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Proyectil")
+	TSubclassOf<AProyectil> ProyectilClase;
 };
