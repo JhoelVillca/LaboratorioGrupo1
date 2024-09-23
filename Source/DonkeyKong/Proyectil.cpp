@@ -28,6 +28,7 @@ AProyectil::AProyectil()
         MaterialMalo = ProyectilMaterialMalo.Object;
     }
 
+	
 	ProyectilMesh->SetNotifyRigidBodyCollision(true);
 	ProyectilMesh->OnComponentHit.AddDynamic(this, &AProyectil::OnHit);
 

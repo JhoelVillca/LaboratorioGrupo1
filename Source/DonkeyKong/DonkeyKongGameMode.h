@@ -6,6 +6,11 @@
 #include "Plataforma.h"
 #include "CieloNoche.h"
 #include "CuboDisparador.h"
+#include "Muro.h"
+#include "MuroLadrillo.h"
+#include "MuroCongelado.h"
+#include "MuroElectrico.h"
+#include "MuroPagajoso.h"
 #include "GameFramework/GameModeBase.h"
 #include "DonkeyKongGameMode.generated.h"
 UCLASS(minimalapi)
@@ -25,6 +30,7 @@ private:
 
 	void GenerarPlataformas();
 	void GenerarCuboDisparador();
+	void GenerarMuros();
 
     float e;
 
@@ -36,9 +42,15 @@ private:
 	TMap<int32, APlataforma*> PlataformaMapcero;
 	TArray<ACuboDisparador*> CubosDisparadores;
 
+	TArray<TSubclassOf<class AMuro>> Muros;
+
+	TSubclassOf<class AMuro> MuroAleatoria;
+
+	
+
 	float numRandoms;
 
-
+	FTimerHandle Timer;
 
 protected:
 	virtual void BeginPlay() override;

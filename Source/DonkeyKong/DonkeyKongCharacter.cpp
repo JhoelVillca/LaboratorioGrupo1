@@ -72,17 +72,14 @@ void ADonkeyKongCharacter::DispararC()
 		FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 100.0f; // Ajustar la distancia de spawn
 		FRotator SpawnRotation = GetActorRotation();
 
-		// Parmetros 
+
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = GetInstigator();
-
-		// Spawnear el proyectil
 		AProyectil* SpawnedProjectile = GetWorld()->SpawnActor<AProyectil>(ProyectilClase, SpawnLocation, SpawnRotation, SpawnParams);
 
 		if (SpawnedProjectile)
 		{
-			// Inicializar el proyectil con la direccin actual del personaje
 			FVector ForwardDirection = GetActorForwardVector();
 			SpawnedProjectile->Disparar(ForwardDirection, true);
 		}

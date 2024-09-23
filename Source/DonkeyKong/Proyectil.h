@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"  // para el movimiento del proyectil
+#include "Particles/ParticleSystemComponent.h" //sistema de particulas
 #include "Proyectil.generated.h"
 
 UCLASS()
@@ -38,6 +39,7 @@ public:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 
 private:
 	FTimerHandle DestroyTimerHandle;

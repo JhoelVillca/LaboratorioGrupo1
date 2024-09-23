@@ -13,6 +13,12 @@ ADonkeyKongGameMode::ADonkeyKongGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+	Muros.Add(AMuro::StaticClass());
+	Muros.Add(AMuroPagajoso::StaticClass());
+	Muros.Add(AMuroElectrico::StaticClass());
+	Muros.Add(AMuroCongelado::StaticClass());
+	Muros.Add(AMuroLadrillo::StaticClass());
+	//InitialLifeSpan = 13.0f;
 }
 
 //void ADonkeyKongGameMode::prueba()
@@ -25,7 +31,7 @@ void ADonkeyKongGameMode::GenerarPlataformas()
 	
 	//1.25f / 3.0f
 	//tamanio de la plataforma = 551
-	e = FMath::RoundToInt(FMath::FRandRange(3.0f, 5.0f));
+	e = FMath::RoundToInt(FMath::FRandRange(3.0f, 6.0f));
 	float varAux = 551.0f;
 	//e = FMath::FRandRange(3.0f, 5.0f);
 	// -516.0f+((e*551.0f/2.0f)-551.0f/2.0f)
@@ -97,12 +103,36 @@ void ADonkeyKongGameMode::GenerarCuboDisparador()
 
 }
 
+void ADonkeyKongGameMode::GenerarMuros()
+{
+	for(int i = 0; i< 3; i++){
+	numRandoms = FMath::RoundToInt(FMath::FRandRange(1.0f, 5 * e));
+	APlataforma* PlataformaEncontrada = PlataformaMap[numRandoms];
+	FVector UbicacionMuro = PlataformaEncontrada->GetActorLocation() + FVector(0, 0, 100);
+	//GetWorld()->SpawnActor<AMuro>(UbicacionMuro, FRotator(0, 0, 0));
+	if (Muros.Num() > 0)
+	{
+		numRandoms = FMath::RoundToInt(FMath::FRandRange(0, Muros.Num() - 1));
+		MuroAleatoria = Muros[numRandoms];
+		if (MuroAleatoria) {
+
+			FActorSpawnParameters SpawnParams;
+			GetWorld()->SpawnActor<AMuro>(MuroAleatoria, UbicacionMuro, FRotator(0, 0, 0), SpawnParams);
+		}
+		
+	}
+	}
+	 
+
+}
+
 void ADonkeyKongGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	GenerarPlataformas();
 	GetWorld()->SpawnActor<ACieloNoche>(FVector(1207.0f, -516 , 780.0f), FRotator(90, 0, 0));
 	GenerarCuboDisparador();
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &ADonkeyKongGameMode::GenerarMuros, 3.0f, true);
 
 }
 
