@@ -31,6 +31,11 @@ void APlataforma::SetMoverse(bool bValue)
 	cValue = bValue ;
 }
 
+void APlataforma::SetMoverse2(bool bValue)
+{
+	cValue2 = bValue;
+}
+
 
 // Called when the game starts or when spawned
 void APlataforma::BeginPlay()
@@ -47,6 +52,9 @@ void APlataforma::Tick(float DeltaTime)
 	if (cValue) {
 		movimiento(DeltaTime);
 	}
+	if (cValue2) {
+		movimiento2(DeltaTime);
+	}
 
 }
 
@@ -61,6 +69,20 @@ void APlataforma::movimiento( float TheTime)
 	NewLocation.Z += FMath::Sin(tiempoMovPlataforma * velocidadMovPlataforma) * distanciaMovPlataforma * TheTime;
 
 	SetActorLocation(NewLocation);
+}
+
+void APlataforma::movimiento2(float TheTime)
+{
+	float velocidadMovPlataforma = 1.5f;
+	float distanciaMovPlataforma = 551.0f;
+	float tiempoMovPlataforma = GetWorld()->GetTimeSeconds();
+
+	FVector NewLocation = GetActorLocation();
+
+	NewLocation.Y += FMath::Sin(tiempoMovPlataforma * velocidadMovPlataforma) * distanciaMovPlataforma * TheTime;
+
+	SetActorLocation(NewLocation);
+
 }
 
 

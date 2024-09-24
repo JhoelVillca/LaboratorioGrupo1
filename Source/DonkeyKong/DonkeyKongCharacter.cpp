@@ -44,6 +44,11 @@ ADonkeyKongCharacter::ADonkeyKongCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+
+	UbicacionActual  = GetActorLocation();
+	UbicacionNueva = FVector(0.0f, 0.0f, 500.0f);
+
 }
 
 
@@ -86,6 +91,22 @@ void ADonkeyKongCharacter::DispararC()
 
 	}
 
+}
+
+void ADonkeyKongCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetActorLocation(FVector(1207.694f, 689.764f, 3206.246f ));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, UbicacionNueva.ToString());
+}
+
+void ADonkeyKongCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	//GetActorLocation();
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, GetActorLocation().ToString());
+	
 }
 
 

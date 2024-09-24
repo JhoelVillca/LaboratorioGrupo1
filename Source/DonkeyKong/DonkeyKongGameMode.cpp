@@ -13,11 +13,18 @@ ADonkeyKongGameMode::ADonkeyKongGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+
+	
+
+
+
+
 	Muros.Add(AMuro::StaticClass());
 	Muros.Add(AMuroPagajoso::StaticClass());
 	Muros.Add(AMuroElectrico::StaticClass());
 	Muros.Add(AMuroCongelado::StaticClass());
 	Muros.Add(AMuroLadrillo::StaticClass());
+	Muros.Add(AMuroSolar::StaticClass());
 	//InitialLifeSpan = 13.0f;
 }
 
@@ -31,7 +38,9 @@ void ADonkeyKongGameMode::GenerarPlataformas()
 	
 	//1.25f / 3.0f
 	//tamanio de la plataforma = 551
-	e = FMath::RoundToInt(FMath::FRandRange(3.0f, 6.0f));
+	//e = FMath::RoundToInt(FMath::FRandRange(3.0f, 6.0f));
+
+	e = 10.0f;//FMath::RoundToInt(FMath::FRandRange(3.0f, 6.0f));
 	float varAux = 551.0f;
 	//e = FMath::FRandRange(3.0f, 5.0f);
 	// -516.0f+((e*551.0f/2.0f)-551.0f/2.0f)
@@ -57,17 +66,21 @@ void ADonkeyKongGameMode::GenerarPlataformas()
 			if (j == 0 || j + 1 == e) {
 				plataformaRotacion.Roll =-15.0f*varAux;
 				plataformaPosicion.Z -= FMath::Tan(FMath::DegreesToRadians(15.0f))*551/2 ;
-				NuevaPlataforma = GetWorld()->SpawnActor<APlataforma>(plataformaPosicion, plataformaRotacion);
+				 NuevaPlataforma = GetWorld()->SpawnActor<APlataforma>(plataformaPosicion, plataformaRotacion);
+				
 				plataformaPosicion.Z -= FMath::Tan(FMath::DegreesToRadians(15.0f))*551 /2 ;
 			}
 			else {
 				plataformaRotacion.Roll = 0.0f;
-				NuevaPlataforma = GetWorld()->SpawnActor<APlataforma>(plataformaPosicion, plataformaRotacion);
+				 NuevaPlataforma = GetWorld()->SpawnActor<APlataforma>(plataformaPosicion, plataformaRotacion);
 			}
 			if (NuevaPlataforma) {
 
 				PlataformaMap.Add(clavePlataforma, NuevaPlataforma);
 				clavePlataforma++;
+			}
+			if (NuevaPlataforma) {
+				ArrayDePlataformas.Add(NuevaPlataforma);
 			}
 
 			plataformaPosicion.Y -= 551.0f*varAux;
@@ -83,6 +96,16 @@ void ADonkeyKongGameMode::GenerarPlataformas()
 		APlataforma** PlataformaEncontrada = PlataformaMap.Find(numRandoms);
 		if (PlataformaEncontrada) {
 			(*PlataformaEncontrada)->SetMoverse(true);
+		}
+	}
+	for (int p = 0; p < 3; p++) {
+		numRandoms2 = FMath::RoundToInt(FMath::FRandRange(1.0f, 5 * e));
+		APlataforma** PlataformaEncontrada2 = PlataformaMap.Find(numRandoms2);
+		APlataforma** PlataformaEncontradaD = PlataformaMap.Find(numRandoms2 +1);
+		if (PlataformaEncontrada2 && PlataformaEncontradaD) {
+			(*PlataformaEncontrada2)->SetMoverse2(true);
+			//(*PlataformaEncontradaD)->Destroy();
+			
 		}
 	}
 
@@ -126,6 +149,17 @@ void ADonkeyKongGameMode::GenerarMuros()
 
 }
 
+void ADonkeyKongGameMode::GenerarConos()
+{
+	for (int i = 0; i < 5; i++) {
+		numRandoms = FMath::RoundToInt(FMath::FRandRange(1.0f, 5 * e));
+		APlataforma* PlataformaEncontrada = PlataformaMap[numRandoms];
+		FVector UbicacionCono = PlataformaEncontrada->GetActorLocation() + FVector(0, 0, 100);
+		GetWorld()->SpawnActor<ACono>(UbicacionCono, FRotator(0, 0, 0));
+	}
+
+}
+
 void ADonkeyKongGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -133,7 +167,8 @@ void ADonkeyKongGameMode::BeginPlay()
 	GetWorld()->SpawnActor<ACieloNoche>(FVector(1207.0f, -516 , 780.0f), FRotator(90, 0, 0));
 	GenerarCuboDisparador();
 	GetWorld()->GetTimerManager().SetTimer(Timer, this, &ADonkeyKongGameMode::GenerarMuros, 3.0f, true);
-
+	//GetWorld()->GetTimerManager().SetTimer(Timer, this, &ADonkeyKongGameMode::GenerarConos, 3.0f, true);
+	GenerarConos();
 }
 
 

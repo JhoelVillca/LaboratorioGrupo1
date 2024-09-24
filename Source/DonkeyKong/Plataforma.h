@@ -14,7 +14,9 @@ public:
 
 
 	bool cValue;
+	bool cValue2;
 	void SetMoverse(bool bValue);
+	void SetMoverse2(bool bValue);
 
 	//void movimiento()
 protected:
@@ -26,6 +28,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	//float TheTime;
 	void movimiento(float TheTime);
+
+	void movimiento2(float TheTime);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Plataforma")
 	UStaticMeshComponent* PlataformaMallaComponente;

@@ -49,4 +49,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Proyectil")
 	TSubclassOf<AProyectil> ProyectilClase;
+
+	FVector UbicacionActual;
+	FVector UbicacionNueva;
+
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 };
